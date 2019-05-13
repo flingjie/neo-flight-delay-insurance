@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-controller="myCtrl">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<title>NEO航空延误险</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css?v=1">
+    <script src="js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<div style="width:100%;height:100%">
+		<div class="home">
+			<div class="head">
+				<div class="headCenter" >
+					<div class="logo">
+						<img src="img/logo2.jpg" ng-click="back()">
+					</div>
+					<div class="title">
+						<p ng-click="back()">
+							<span>NEO航空延误险</span>
+						</p>
+						<p class="subtitle">NEO Flight Delay Insurance</p>
+					</div>
+				</div>
+			</div>
+			<div class="section">
+				<div class="hisList">
+					<li class="listTitle">
+						<span>Date</span>
+						<span>Flight No</span>
+						<span>Departure</span>
+						<span>Destination</span>
+						<span>Departure Time</span>
+						<span>Arrive Time</span>
+						<span>Actual Arrive Time</span>
+						<span>NEO Address</span>
+						<span>Insure Amount</span>
+						<span>Payout</span>
+					</li>
+
+					<% for(var i=0;i<histories.length;i++) { %>
+						<li>
+							<span><%= histories[i].date %></span>
+							<span><%= histories[i].flightNo %></span>
+							<span><%= histories[i].departure %></span>
+							<span><%= histories[i].destination %></span>
+							<span><%= histories[i].departureTime %></span>
+							<span><%= histories[i].arriveTime %></span>
+							<span><%= histories[i].arriveTimeActual %></span>
+							<span><%= histories[i].neoAddress.slice(0,5)+'*****' %></span>
+							<span><%= histories[i].amount %> NEO</span>
+							<span><%= histories[i].payout %> NEO</span>
+						</li>
+					<% } %>
+				</div>
+
+				<div class="buttons one">
+					<a href="/">
+						<span class="btn">
+							继续投保
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" ng-controller="myCtrl">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>NEO航空延误险</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css?v=1">
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script>
+		function submit() {
+			var d = $("#date").val();
+			var flight_no = $("#flight_no").val();
+			var departure = $("#departure").val();
+			var destination = $("#destination").val();
+			var departure_time = $("#departure_time").val();
+			var amount = $("#amount").val();
+			console.log(d, flight_no, departure, destination, departure_time, amount);
+			$.ajax({  
+				type: "post",  
+				url: "/",  
+				async: false, 
+				data: JSON.stringify({                    
+					date: d,  
+					flight_no: flight_no,  
+					departure: departure,  
+					destination: destination,  
+					departure_time: departure_time,  
+					amount: amount
+				}),  
+				contentType: "application/json; charset=utf-8",  
+				dataType: "json",  
+				success: function(data) {  
+					console.log(data);  
+					window.location.href = "/my";
+				},
+				error: function (jqXHR, exception) {
+					var msg = '';
+					if (jqXHR.status === 0) {
+						msg = 'Not connect.\n Verify Network.';
+					} else if (jqXHR.status == 404) {
+						msg = 'Requested page not found. [404]';
+					} else if (jqXHR.status == 500) {
+						msg = 'Internal Server Error [500].';
+					} else if (exception === 'parsererror') {
+						msg = 'Requested JSON parse failed.';
+					} else if (exception === 'timeout') {
+						msg = 'Time out error.';
+					} else if (exception === 'abort') {
+						msg = 'Ajax request aborted.';
+					} else {
+						msg = 'Uncaught Error.\n' + jqXHR.responseText;
+					}
+					$('#post').html(msg);
+				}
+			});  
+		}
+	</script>
+</head>
+<body>
+	<div style="width:100%;height:100%">
+		<div class="home">
+				<div class="head">
+					<div class="headCenter">
+						<div class="logo">
+							<img src="img/logo2.jpg">
+						</div>
+						<div class="title">
+							<p>
+								<span>NEO航空延误险</span>
+							</p>
+							<p class="subtitle">NEO Flight Delay Insurance</p>
+						</div>
+					</div>
+				</div>
+				<div class="section">
+					<div class="form">
+						<input type="text" onfocus="(this.type='date')" placeholder="Date of the flight arrival" id="date">
+						<input type="text" name="" placeholder="Flight number" id="flight_no">
+						<input type="text" name="" placeholder="Departure" id="departure">
+						<input type="text" name="" placeholder="Destination" id="destination">
+						<input type="text" name="" placeholder="Departure Time" id="departure_time">
+						<div style="position: relative;">
+							<input class="amount" type="number" min="0" placeholder="Insurance amount" id="amount">
+							<span style="    
+							position: absolute;
+							right: 0;
+							top: 0;
+							color: #666;
+							line-height: 34px;
+							padding-right: 5px;">NEO</span>
+						</div>
+						<div class="submitArea">
+							<div class="submitBtn btn" onclick="submit()">Pay Insurance</div>
+						</div>
+						<div class="buttons">
+								<a class="btn" href="/history">History Insurance</a>
+								<a class="btn" href="/my" >My Insurance</a>
+						</div>
+					</div>
+			
+					<div class="info">
+						* 可投保日期：以航班预定降落时间为准<br>
+						* 请准确输入航班号，如输入错误投保金额扣除gas费用后原路退回<br>
+						* 每日累计投保金额分配给投保的延误用户，按照投保金额比例分配<br>
+						* 每日理赔完成后，保额归0，本DAPP不收取任何手续费，不截留任何资金<br>
+						* 延误标准：降落比预定时间晚60分钟（含）以上（含备降、取消）<br>
+						* 如当日没有任何飞机延误，则投保金额扣除gas费用原路退回<br>
+						* 合约开源：http://github.com/...........<br>
+						* 理赔数据依赖：航旅纵横 or 非常准<br>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>
